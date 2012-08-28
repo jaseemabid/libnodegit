@@ -8,6 +8,7 @@
 using namespace v8;
 using namespace std;
 
+
 Handle<Value> index(const Arguments& args) {
 
 	 HandleScope scope;
@@ -26,8 +27,6 @@ Handle<Value> index(const Arguments& args) {
 
 	 unsigned int i, ecount;
 
-	 git_index_entry **entries;
-	 git_index_entry *e;
 	 git_oid oid;
 
 	 char out[41]; out[40] = '\0';
@@ -42,7 +41,6 @@ Handle<Value> index(const Arguments& args) {
 	 ecount = git_index_entrycount(git_index);
 
 	 cout << "count : " << ecount << endl;
-
 
 	 Handle<Array> array = Array::New(ecount);
 
@@ -85,7 +83,7 @@ void init(Handle<Object> target) {
 
 	 NODE_SET_METHOD(target, "index", index);
 	 NODE_SET_METHOD(target, "foo", foo);
-
 }
 
-NODE_MODULE(hello, init)
+
+NODE_MODULE(libnodegit, init)

@@ -20,7 +20,6 @@
 		"wrapper",
 		"bindings"
 	],
-	"main": "",
 	"engines": {
 		"node": "*"
 	}
