@@ -1,0 +1,27 @@
+{
+	"name": "libnodegit",
+	"description": "JavaScript wrapper for git with libgit2",
+	"version": "0.0.0",
+	"author": "Jaseem Abid <jaseemabid@gmail.com>",
+	"dependencies": {
+	},
+	"devDependencies": {
+		"mocha": "*",
+		"should": "*",
+		"chai": "*",
+		"jslint" : "*"
+	},
+	"scripts": {
+		"test": "test/test.js"
+	},
+	"keywords": [
+		"git",
+		"libgit",
+		"wrapper",
+		"bindings"
+	],
+	"main": "",
+	"engines": {
+		"node": "*"
+	}
+}
