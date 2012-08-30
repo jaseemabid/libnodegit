@@ -14,10 +14,10 @@ Handle<Value> index(const Arguments& args) {
 	 HandleScope scope;
 
 	 /*
-		libgit2 variables
+	   libgit2 variables
 
-		Will have to move this to a common header with a nodelibgit namespace or
-		something
+	   Will have to move this to a common header with a nodelibgit namespace or
+	   something
 	 */
 
 	 git_repository *git_repo;
@@ -33,14 +33,12 @@ Handle<Value> index(const Arguments& args) {
 
 	 status = git_repository_open(&git_repo, "/home/jaseem/Projects/libnodegit" ); // Use argv[0]
 
-	 cout << "Repo st " << status << endl; // Throw an exception for non zero
+	 // Throw an exception for non zero status
 
 	 git_repository_index(&git_index, git_repo);
 	 git_index_read(git_index);
 
 	 ecount = git_index_entrycount(git_index);
-
-	 cout << "count : " << ecount << endl;
 
 	 Handle<Array> array = Array::New(ecount);
 
