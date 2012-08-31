@@ -1,13 +1,14 @@
 #include <node.h>
 #include <v8.h>
 
+#include "util.cpp"
+
 #include <git2.h>
 
 #include <iostream>
 
 using namespace v8;
 using namespace std;
-
 
 Handle<Value> index(const Arguments& args) {
 
@@ -20,6 +21,16 @@ Handle<Value> index(const Arguments& args) {
 	   something
 	 */
 
+	 if (args.Length() < 1) {
+		  ThrowException(Exception::TypeError(String::New("Argument missing")));
+		  return scope.Close(Undefined());
+	 }
+
+	 if (!args[0]->IsString()) {
+		  ThrowException(Exception::TypeError(String::New("Argument should be a path string")));
+		  return scope.Close(Undefined());
+	 }
+
 	 git_repository *git_repo;
 	 git_index *git_index;
 
@@ -31,9 +42,13 @@ Handle<Value> index(const Arguments& args) {
 
 	 char out[41]; out[40] = '\0';
 
-	 status = git_repository_open(&git_repo, "/home/jaseem/Projects/libnodegit" ); // Use argv[0]
+	 status = git_repository_open(&git_repo, V8StringToChar(args[0]->ToString()));
 
 	 // Throw an exception for non zero status
+	 if (status != 0) {
+		  ThrowException(Exception::TypeError(String::New("Unable to open the git repository")));
+		  return scope.Close(Undefined());
+	 }
 
 	 git_repository_index(&git_index, git_repo);
 	 git_index_read(git_index);
@@ -82,6 +97,5 @@ void init(Handle<Object> target) {
 	 NODE_SET_METHOD(target, "index", index);
 	 NODE_SET_METHOD(target, "foo", foo);
 }
-
 
 NODE_MODULE(libnodegit, init)

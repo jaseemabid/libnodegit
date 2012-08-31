@@ -15,11 +15,16 @@ describe "repositories", ->
 
     it "should open valid repositories", ->
 
+        (
+            () ->
+                index = libnodegit.index("/home/jaseem/Projects/libnodegit")
+        ).should.not.throw();
+
     it "should not open invalid repositories", ->
 
         (
             () ->
-                index = libnodegit.index("/home/jaseem/Projects/libnodegit")
+                index = libnodegit.index("/some/stupid/path")
         ).should.throw();
 
 
