@@ -10,7 +10,7 @@
 using namespace v8;
 using namespace std;
 
-Handle<Value> index(const Arguments& args) {
+Handle<Value> gitIndex(const Arguments& args) {
 
 	 HandleScope scope;
 
@@ -84,18 +84,23 @@ Handle<Value> index(const Arguments& args) {
 	 return scope.Close(array);
 }
 
-Handle<Value> foo(const Arguments& args) {
+Handle<Value> Repository(const Arguments& args) {
 	 HandleScope scope;
 
-	 Local<Integer> integer = args[0]->ToInteger();
-	 int32_t seq = integer->Value();
-	 return scope.Close(Integer::New(seq));
+	 Local<Object> obj = Object::New();
+	 obj->Set(String::NewSymbol("path"), args[0]->ToString());
+
+	 NODE_SET_METHOD(obj, "index", gitIndex);
+
+	 return scope.Close(obj);
 }
+
+
 
 void init(Handle<Object> target) {
 
-	 NODE_SET_METHOD(target, "index", index);
-	 NODE_SET_METHOD(target, "foo", foo);
+	 target->Set(String::NewSymbol("Repository"),
+				 FunctionTemplate::New(Repository)->GetFunction());
 }
 
 NODE_MODULE(libnodegit, init)
