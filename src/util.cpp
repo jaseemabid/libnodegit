@@ -1,3 +1,6 @@
+#ifndef UTIL_H
+#define UTIL_H
+
 #include <v8.h>
 
 using namespace v8;
@@ -12,3 +15,5 @@ char* V8StringToChar(Handle<String> str) {
 char* V8StringToChar(Local<Value> val) {
   return V8StringToChar(val->ToString());
 }
+
+#endif

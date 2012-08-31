@@ -2,6 +2,7 @@
 #include <v8.h>
 
 #include "util.cpp"
+#include "repository.h"
 
 #include <git2.h>
 
@@ -10,97 +11,64 @@
 using namespace v8;
 using namespace std;
 
-Handle<Value> gitIndex(const Arguments& args) {
+Handle<Value> Repository::index(const Arguments& args) {
+	HandleScope scope;
 
-	 HandleScope scope;
+	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
-	 /*
-	   libgit2 variables
+	git_repository *git_repo;
+	git_index *git_index;
 
-	   Will have to move this to a common header with a nodelibgit namespace or
-	   something
-	 */
+	int status;
 
-	 if (args.Length() < 1) {
-		  ThrowException(Exception::TypeError(String::New("Argument missing")));
-		  return scope.Close(Undefined());
-	 }
+	unsigned int i, ecount;
 
-	 if (!args[0]->IsString()) {
-		  ThrowException(Exception::TypeError(String::New("Argument should be a path string")));
-		  return scope.Close(Undefined());
-	 }
+	git_oid oid;
 
-	 git_repository *git_repo;
-	 git_index *git_index;
+	char out[41]; out[40] = '\0';
 
-	 int status;
+	// Convert std::string to const char* or char*
+	// http://stackoverflow.com/a/347959/501945
+	const char * c = obj->path_.c_str();
 
-	 unsigned int i, ecount;
+	status = git_repository_open(&git_repo,c );
 
-	 git_oid oid;
+	// Throw an exception for non zero status
+	if (status != 0) {
+		ThrowException(Exception::TypeError(String::New("Unable to open the git repository")));
+		return scope.Close(Undefined());
+	}
 
-	 char out[41]; out[40] = '\0';
+	git_repository_index(&git_index, git_repo);
+	git_index_read(git_index);
 
-	 status = git_repository_open(&git_repo, V8StringToChar(args[0]->ToString()));
+	ecount = git_index_entrycount(git_index);
 
-	 // Throw an exception for non zero status
-	 if (status != 0) {
-		  ThrowException(Exception::TypeError(String::New("Unable to open the git repository")));
-		  return scope.Close(Undefined());
-	 }
+	Handle<Array> array = Array::New(ecount);
 
-	 git_repository_index(&git_index, git_repo);
-	 git_index_read(git_index);
+	for (i = 0; i < ecount; ++i) {
 
-	 ecount = git_index_entrycount(git_index);
+		git_index_entry *e = git_index_get(git_index, i);
+		Local<Object> file = Object::New();
 
-	 Handle<Array> array = Array::New(ecount);
+		oid = e->oid;
+		git_oid_fmt(out, &oid);
 
-	 for (i = 0; i < ecount; ++i) {
+		file->Set(String::NewSymbol("path"), String::New(e->path));
+		file->Set(String::NewSymbol("sha"), String::New(out));
+		file->Set(String::NewSymbol("size"), Integer::New(e->file_size));
+		file->Set(String::NewSymbol("device"), Integer::New(e->dev));
+		file->Set(String::NewSymbol("inode"), Integer::New(e->ino));
+		file->Set(String::NewSymbol("uid"), Integer::New(e->uid));
+		file->Set(String::NewSymbol("gid"), Integer::New(e->gid));
+		file->Set(String::NewSymbol("ctime"),Integer::New(e->ctime.seconds));
+		file->Set(String::NewSymbol("mtime"), Integer::New(e->mtime.seconds));
 
-		  git_index_entry *e = git_index_get(git_index, i);
-		  Local<Object> file = Object::New();
+		array->Set(i, file);
+	}
 
-		  oid = e->oid;
-		  git_oid_fmt(out, &oid);
+	git_index_free(git_index);
+	git_repository_free(git_repo);
 
-		  file->Set(String::NewSymbol("path"), String::New(e->path));
-		  file->Set(String::NewSymbol("sha"), String::New(out));
-		  file->Set(String::NewSymbol("size"), Integer::New(e->file_size));
-		  file->Set(String::NewSymbol("device"), Integer::New(e->dev));
-		  file->Set(String::NewSymbol("inode"), Integer::New(e->ino));
-		  file->Set(String::NewSymbol("uid"), Integer::New(e->uid));
-		  file->Set(String::NewSymbol("gid"), Integer::New(e->gid));
-		  file->Set(String::NewSymbol("ctime"),Integer::New(e->ctime.seconds));
-		  file->Set(String::NewSymbol("mtime"), Integer::New(e->mtime.seconds));
-
-		  array->Set(i, file);
-	 }
-
-	 git_index_free(git_index);
-	 git_repository_free(git_repo);
-
-	 return scope.Close(array);
+	return scope.Close(array);
 }
-
-Handle<Value> Repository(const Arguments& args) {
-	 HandleScope scope;
-
-	 Local<Object> obj = Object::New();
-	 obj->Set(String::NewSymbol("path"), args[0]->ToString());
-
-	 NODE_SET_METHOD(obj, "index", gitIndex);
-
-	 return scope.Close(obj);
-}
-
-
-
-void init(Handle<Object> target) {
-
-	 target->Set(String::NewSymbol("Repository"),
-				 FunctionTemplate::New(Repository)->GetFunction());
-}
-
-NODE_MODULE(libnodegit, init)

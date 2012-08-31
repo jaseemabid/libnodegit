@@ -1,5 +1,5 @@
-#ifndef MYOBJECT_H
-#define MYOBJECT_H
+#ifndef REPOSITORY_H
+#define REPOSITORY_H
 
 #include <node.h>
 #include <string>
