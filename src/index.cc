@@ -34,9 +34,10 @@ Handle<Value> Repository::index(const Arguments& args) {
 	status = git_repository_open(&git_repo,c );
 
 	// Throw an exception for non zero status
+	// TODO: This is not working
 	if (status != 0) {
-		ThrowException(Exception::TypeError(String::New("Unable to open the git repository")));
-		return scope.Close(Undefined());
+		 ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
+		 return scope.Close(Undefined());
 	}
 
 	git_repository_index(&git_index, git_repo);
