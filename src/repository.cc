@@ -6,7 +6,7 @@
 
 #include <git2.h>
 
-#include "util.cpp"
+#include "util.cc"
 #include "repository.h"
 
 #include "index.cc"
