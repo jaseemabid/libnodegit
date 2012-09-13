@@ -1,3 +1,4 @@
 # Ignore the build folder
 build/
 node_modules
+examples/
