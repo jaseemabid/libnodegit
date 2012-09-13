@@ -22,6 +22,8 @@ private:
 
 	static v8::Handle<v8::Value> New(const v8::Arguments& args);
 	static v8::Handle<v8::Value> index(const v8::Arguments& args);
+	static v8::Handle<v8::Value> isBare(const v8::Arguments& args);
+	static v8::Handle<v8::Value> isEmpty(const v8::Arguments& args);
 
 };
 

@@ -52,6 +52,12 @@ void Repository::Init(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("index"),
 								  FunctionTemplate::New(index)->GetFunction());
 
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("isEmpty"),
+								  FunctionTemplate::New(isEmpty)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("isBare"),
+								  FunctionTemplate::New(isBare)->GetFunction());
+
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Repository"), constructor);
 }
@@ -63,4 +69,34 @@ Handle<Value> Repository::New(const Arguments& args) {
 	obj->Wrap(args.This());
 	return scope.Close(args.This());
 
+}
+
+Handle<Value> Repository::isEmpty(const Arguments& args) {
+
+	HandleScope scope;
+	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
+
+	int isEmpty;
+	isEmpty =  git_repository_is_empty(obj->repo_);
+
+	if(isEmpty == 1)  {
+		return scope.Close(v8::True());
+	} else {
+		return scope.Close(v8::False());
+	}
+}
+
+Handle<Value> Repository::isBare(const Arguments& args) {
+
+	HandleScope scope;
+	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
+
+	int isBare;
+	isBare =  git_repository_is_bare(obj->repo_);
+
+	if(isBare == 1)  {
+		return scope.Close(v8::True());
+	} else {
+		return scope.Close(v8::False());
+	}
 }
