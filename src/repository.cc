@@ -8,13 +8,38 @@
 
 #include "util.cc"
 #include "repository.h"
-
 #include "index.cc"
 
 using namespace v8;
 
-Repository::Repository() {};
-Repository::~Repository() {};
+Repository::Repository(const Arguments& args) {
+
+	path_ = V8StringToChar(args[0]->ToString());
+
+	// Convert std::string to const char* or char*
+	// http://stackoverflow.com/a/347959/501945
+	const char * c = path_.c_str();
+
+	int status;
+	status = git_repository_open(&repo_,c );
+
+	// Throw an exception for non zero status
+	// TODO This is not working
+	if (status != 0) {
+		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
+	}
+
+	git_repository_index(&index_, repo_);
+	git_index_read(index_);
+};
+
+Repository::~Repository() {
+
+	// TODO Unsure if this will GC properly
+	git_index_free(index_);
+	git_repository_free(repo_);
+
+};
 
 void Repository::Init(Handle<Object> target) {
 
@@ -32,11 +57,10 @@ void Repository::Init(Handle<Object> target) {
 }
 
 Handle<Value> Repository::New(const Arguments& args) {
+
 	HandleScope scope;
-	Repository* obj = new Repository();
-
-	obj->path_ = V8StringToChar(args[0]->ToString());
-
+	Repository* obj = new Repository(args);
 	obj->Wrap(args.This());
-	return args.This();
+	return scope.Close(args.This());
+
 }

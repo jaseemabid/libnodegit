@@ -17,7 +17,7 @@ public:
 	std::string path_;
 
 private:
-	Repository();
+	Repository(const Arguments& args);
 	~Repository();
 
 	static v8::Handle<v8::Value> New(const v8::Arguments& args);

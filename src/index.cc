@@ -16,34 +16,14 @@ Handle<Value> Repository::index(const Arguments& args) {
 
 	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
-	int status;
-	unsigned int i, ecount;
-
+	unsigned int i, index_size;
 	git_oid oid;
-
 	char out[41]; out[40] = '\0';
 
-	// Convert std::string to const char* or char*
-	// http://stackoverflow.com/a/347959/501945
-	const char * c = obj->path_.c_str();
+	index_size = git_index_entrycount(obj->index_);
+	Handle<Array> array = Array::New(index_size);
 
-	status = git_repository_open(&(obj->repo_),c );
-
-	// Throw an exception for non zero status
-	// TODO: This is not working
-	if (status != 0) {
-		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
-		return scope.Close(Undefined());
-	}
-
-	git_repository_index(&(obj->index_), obj->repo_);
-	git_index_read(obj->index_);
-
-	ecount = git_index_entrycount(obj->index_);
-
-	Handle<Array> array = Array::New(ecount);
-
-	for (i = 0; i < ecount; ++i) {
+	for (i = 0; i < index_size; i++) {
 
 		git_index_entry *e = git_index_get(obj->index_, i);
 		Local<Object> file = Object::New();
@@ -63,9 +43,6 @@ Handle<Value> Repository::index(const Arguments& args) {
 
 		array->Set(i, file);
 	}
-
-	git_index_free(obj->index_);
-	git_repository_free(obj->repo_);
 
 	return scope.Close(array);
 }
