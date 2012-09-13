@@ -12,7 +12,7 @@
 		"jslint" : "*"
 	},
 	"scripts": {
-		"test": "test/test.js"
+		"test": "mocha"
 	},
 	"keywords": [
 		"git",

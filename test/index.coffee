@@ -2,32 +2,18 @@
 
 "use strict";
 
-lib    = require('../build/Release/libnodegit')
-_      = require('underscore')
+lib        = require('../build/Release/libnodegit')
+_          = require('underscore')
+log        = console.log
+def        = require('./defaults')
 
-describe "libnodegit", () ->
-    it "should return an object", ->
-        lib.should.be.an.instanceOf(Object)
-    it "should have property Repository", ->
-        lib.should.have.property('Repository')
-
-describe "repositories", ->
-
-    before () ->
-
-    it "should open valid repositories", ->
-        (() ->
-            repo = new lib.Repository("../")
-        ).should.not.throw();
-
-    # it "should not open invalid repositories", ->
-    #     (() ->
-    #         repo = new lib.Repository("/a/b/c")
-    #     ).should.throw()
+REPO_VALID = def.REPO_VALID
+REPO_BARE  = def.REPO_BARE
+REPO_EMPTY = def.REPO_EMPTY
 
 describe "index", () ->
 
-    repo = new lib.Repository("/home/jaseem/Projects/libnodegit")
+    repo = new lib.Repository(REPO_VALID)
     index = repo.index()
 
     it "should return an array", () ->
