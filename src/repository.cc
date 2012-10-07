@@ -9,6 +9,7 @@
 #include "util.cc"
 #include "repository.h"
 #include "index.cc"
+#include "ref.cc"
 
 using namespace v8;
 
@@ -57,6 +58,9 @@ void Repository::Init(Handle<Object> target) {
 
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("isBare"),
 								  FunctionTemplate::New(isBare)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("head"),
+								  FunctionTemplate::New(head)->GetFunction());
 
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Repository"), constructor);
