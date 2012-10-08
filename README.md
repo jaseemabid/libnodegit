@@ -11,7 +11,8 @@ More information is there on the wiki.
 
 Mac OS X/Linux/Unix
 Install nodegit by cloning source from GitHub.
-TODO: Add makefiles to automate this?
+
+*TODO*: Add makefiles to automate this?
 
 *Note: nodegit assumes your library path exists at ~/.node_libraries you can
  change this by specifying a new lib path*
@@ -34,8 +35,12 @@ TODO: Add makefiles to automate this?
 
 ## Freemind map
 
-	There is an org-mode file
-	[here](https://github.com/jaseemabid/libnodegit/wiki/libnodegit.org). Export
-	it to freemind map by *M-x org-export-as-freemind* in emacs.
+There is an org-mode file
+[here](https://github.com/jaseemabid/libnodegit/wiki/libnodegit.org). Export it
+to freemind map by *M-x org-export-as-freemind* in emacs.
 
-## Project milestones [here](https://github.com/jaseemabid/libnodegit/wiki/Milestones)
+## Project milestones
+
+Quite incomplete. Preview [here](https://github.com/jaseemabid/libnodegit/wiki/Milestones)
+
+## libnodegit helloworld in CoffeeScript
