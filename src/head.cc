@@ -1,14 +1,13 @@
-#include <node.h>
-#include <v8.h>
+#include <iostream>
 
-#include "util.cc"
-#include "repository.h"
+#include <node.h>
 
 #include <git2.h>
 
-#include <iostream>
+#include "util.cc"
+#include "repository.h"
+#include "reference.h"
 
-using namespace v8;
 
 Handle<Value> Repository::head(const Arguments& args) {
 	HandleScope scope;
@@ -24,11 +23,13 @@ Handle<Value> Repository::head(const Arguments& args) {
 
 		const git_oid * head_oid = git_reference_oid(head_out);
 
-		char out[41];
-		out[40] = '\0';
-		git_oid_fmt(out, head_oid);
+		char sha[41];
+		sha[40] = '\0';
+		git_oid_fmt(sha, head_oid);
 
-		return scope.Close(String::New(out));
+		Handle<Reference> head_ref = Reference::New(String::New("jaseemabid", 10));
+
+		return scope.Close(String::New(sha));
 
 	} else {
 

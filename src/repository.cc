@@ -9,7 +9,8 @@
 #include "util.cc"
 #include "repository.h"
 #include "index.cc"
-#include "ref.cc"
+#include "head.cc"
+
 
 using namespace v8;
 
