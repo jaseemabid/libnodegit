@@ -27,7 +27,7 @@ Handle<Value> Repository::head(const Arguments& args) {
 		sha[40] = '\0';
 		git_oid_fmt(sha, head_oid);
 
-		Handle<Reference> head_ref = Reference::New(String::New("jaseemabid", 10));
+		// Handle<Reference> head_ref = Reference::New(String::New("jaseemabid", 10));
 
 		return scope.Close(String::New(sha));
 

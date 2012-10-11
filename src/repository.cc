@@ -1,5 +1,3 @@
-#define BUILDING_NODE_EXTENSION
-
 #include <iostream>
 
 #include <node.h>
