@@ -13,6 +13,33 @@
 
 using namespace v8;
 
+void Repository::Init(Handle<Object> target) {
+
+	// Prepare constructor template
+	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
+	tpl->SetClassName(String::NewSymbol("Repository"));
+	tpl->InstanceTemplate()->SetInternalFieldCount(1);
+
+	// Prototype
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("index"),
+								  FunctionTemplate::New(index)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("isEmpty"),
+								  FunctionTemplate::New(isEmpty)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("isBare"),
+								  FunctionTemplate::New(isBare)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("head"),
+								  FunctionTemplate::New(head)->GetFunction());
+
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
+								  FunctionTemplate::New(free)->GetFunction());
+
+	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
+	target->Set(String::NewSymbol("Repository"), constructor);
+}
+
 Repository::Repository(const Arguments& args) {
 
 	path_ = V8StringToChar(args[0]->ToString());
@@ -41,33 +68,6 @@ Repository::~Repository() {
 	git_repository_free(repo_);
 
 };
-
-void Repository::Init(Handle<Object> target) {
-
-	// Prepare constructor template
-	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-	tpl->SetClassName(String::NewSymbol("Repository"));
-	tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("index"),
-								  FunctionTemplate::New(index)->GetFunction());
-
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("isEmpty"),
-								  FunctionTemplate::New(isEmpty)->GetFunction());
-
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("isBare"),
-								  FunctionTemplate::New(isBare)->GetFunction());
-
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("head"),
-								  FunctionTemplate::New(head)->GetFunction());
-
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
-								  FunctionTemplate::New(free)->GetFunction());
-
-	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
-	target->Set(String::NewSymbol("Repository"), constructor);
-}
 
 Handle<Value> Repository::New(const Arguments& args) {
 
