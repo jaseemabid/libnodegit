@@ -42,6 +42,10 @@ void Repository::Initialize(Handle<Object> target) {
 
 Repository::Repository(const Arguments& args) {
 
+	if(args.Length() == 0 || !args[0]->IsString()) {
+		ThrowException(Exception::Error(String::New("Path is required and must be a String")));
+	}
+
 	path_ = V8StringToChar(args[0]->ToString());
 
 	// Convert std::string to const char* or char*

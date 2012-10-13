@@ -18,10 +18,10 @@ describe "repositories", ->
             repo = new lib.Repository(REPO_VALID)
         ).should.not.throw();
 
-    # it "should not open invalid repositories", ->
-    #     (() ->
-    #         repo = new lib.Repository("/a/b/c")
-    #     ).should.throw()
+    it "should not open invalid repositories", ->
+        (() ->
+            repo = new lib.Repository("/a/b/c")
+        ).should.throw()
 
     describe "isBare", ->
         it "should return a boolean", ->
