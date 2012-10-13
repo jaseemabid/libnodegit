@@ -13,7 +13,7 @@
 
 using namespace v8;
 
-void Repository::Init(Handle<Object> target) {
+void Repository::Initialize(Handle<Object> target) {
 
 	// Prepare constructor template
 	Local<FunctionTemplate> tpl = FunctionTemplate::New(New);

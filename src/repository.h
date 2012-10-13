@@ -9,7 +9,7 @@ using namespace v8;
 
 class Repository : public node::ObjectWrap {
 public:
-	static void Init(v8::Handle<v8::Object> target);
+	static void Initialize(v8::Handle<v8::Object> target);
 
 	git_repository *repo_;
 	git_index *index_;
