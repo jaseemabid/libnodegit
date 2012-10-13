@@ -62,6 +62,9 @@ void Repository::Init(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("head"),
 								  FunctionTemplate::New(head)->GetFunction());
 
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
+								  FunctionTemplate::New(free)->GetFunction());
+
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Repository"), constructor);
 }
@@ -103,4 +106,15 @@ Handle<Value> Repository::isBare(const Arguments& args) {
 	} else {
 		return scope.Close(v8::False());
 	}
+}
+
+
+Handle<Value> Repository::free(const Arguments& args) {
+  HandleScope scope;
+
+  Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
+
+  git_repository_free(obj->repo_);
+
+  return scope.Close( Number::New(0) );
 }
