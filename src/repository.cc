@@ -55,10 +55,12 @@ Repository::Repository(const Arguments& args) {
 	// TODO This is not working
 	if (status != 0) {
 		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
+	} else {
+		 // Throw is not *throwing*. I need an else clause here
+		 git_repository_index(&index_, repo_);
+		 git_index_read(index_);
 	}
 
-	git_repository_index(&index_, repo_);
-	git_index_read(index_);
 };
 
 Repository::~Repository() {
