@@ -46,24 +46,7 @@ Repository::Repository(const Arguments& args) {
 		ThrowException(Exception::Error(String::New("Path is required and must be a String")));
 	}
 
-	path_ = V8StringToChar(args[0]->ToString());
-
-	// Convert std::string to const char* or char*
-	// http://stackoverflow.com/a/347959/501945
-	const char * c = path_.c_str();
-
-	int status;
-	status = git_repository_open(&repo_,c );
-
-	// Throw an exception for non zero status
-	// TODO This is not working
-	if (status != 0) {
-		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
-	} else {
-		 // Throw is not *throwing*. I need an else clause here
-		 git_repository_index(&index_, repo_);
-		 git_index_read(index_);
-	}
+	this->open(args);
 
 };
 
@@ -114,6 +97,33 @@ Handle<Value> Repository::isBare(const Arguments& args) {
 	}
 }
 
+Handle<Value> Repository::open(const Arguments& args) {
+
+	HandleScope scope;
+
+	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
+
+	obj->path_ = V8StringToChar(args[0]->ToString());
+
+	// Convert std::string to const char* or char*
+	// http://stackoverflow.com/a/347959/501945
+	const char * path = obj->path_.c_str();
+
+	int status;
+	status = git_repository_open(&obj->repo_,path);
+
+	// Throw an exception for non zero status
+	// TODO This is not working
+	if (status != 0) {
+		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
+	} else {
+		// Throw is not *throwing*. I need an else clause here
+		git_repository_index(&obj->index_, obj->repo_);
+		git_index_read(obj->index_);
+	}
+
+	return scope.Close(Number::New(0));
+}
 
 Handle<Value> Repository::free(const Arguments& args) {
   HandleScope scope;
