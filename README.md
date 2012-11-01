@@ -43,4 +43,11 @@ to freemind map by *M-x org-export-as-freemind* in emacs.
 
 Quite incomplete. Preview [here](https://github.com/jaseemabid/libnodegit/wiki/Milestones)
 
+## Resources
+
+A long boring academic report
+[pdf](https://github.com/downloads/jaseemabid/libnodegit/report.pdf)
+
+A quick presentation [slides](http://rvl.io/jaseemabid/libnodegit)
+
 ## libnodegit helloworld in CoffeeScript
