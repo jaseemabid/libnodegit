@@ -51,3 +51,19 @@ A long boring academic report
 A quick presentation [slides](http://rvl.io/jaseemabid/libnodegit)
 
 ## libnodegit helloworld in CoffeeScript
+
+
+## License and legal stuff
+
+Copy this, I don't care. Releasing code as
+[WTFPL](http://en.wikipedia.org/wiki/WTFPL)
+
+        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        0 0 0 0 0 0 0 a 0 0 0 0 0 0 0
+        0 0 0 0 0 0 a C a 0 0 0 0 0 0
+        0 0 0 0 0 a a a a a 0 0 0 0 0
+        0 0 0 0 a a a a a a a 0 0 0 0
+        0 0 0 a a a a a a a a a 0 0 0
+     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+     0 0 0 0 0 0 0 K O P I M I 0 0 0 0 0 0
+    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
