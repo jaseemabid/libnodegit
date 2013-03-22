@@ -42,37 +42,29 @@ Commit::Commit(const Arguments& args) {
 
 	 error = git_repository_open(&repo, "/home/jaseemabid/Projects/libnodegit");
 
-	 git_oid_fromstr(&oid, "361666a55ab643ca9e68de6cc44f800627c002e3");
+	 /* Get the sha id in a format v8 understands
+	   Convert std::string to const char* or char*
+	   http://stackoverflow.com/a/347959/501945 */
+
+	 sha_ = V8StringToChar(args[0]->ToString());
+	 const char * sha = sha_.c_str();
+
+	 git_oid_fromstr(&oid, sha);
 
 	 error = git_commit_lookup(&commit, repo, &oid);
 
 	 if (error != 0) {
-		  std::cout << "Error looking up commit" ;
+		  ThrowException(
+			   Exception::Error(
+					String::New("Error looking up the commit")));
 	 }
 
+
+	 // Read commit values and store to class variables
 	 msg_string	= git_commit_message(commit);
 	 author_sig	= git_commit_author(commit);
 	 cmtter_sig	= git_commit_committer(commit);
 	 ctime		= git_commit_time(commit);
-
-	// sha_ = V8StringToChar(args[0]->ToString());
-
-	// // Convert std::string to const char* or char*
-	// // http://stackoverflow.com/a/347959/501945
-	// const char * sha = sha_.c_str();
-
-	// int status;
-	// status = git_repository_open(&repo_,c );
-
-	// // Throw an exception for non zero status
-	// // TODO This is not working
-	// if (status != 0) {
-	// 	ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
-	// } else {
-	// 	 // Throw is not *throwing*. I need an else clause here
-	// 	 git_repository_index(&index_, repo_);
-	// 	 git_index_read(index_);
-	// }
 
 };
 
