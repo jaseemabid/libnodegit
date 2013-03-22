@@ -7,7 +7,8 @@
 			'target_name': 'liblibnodegit',
 			"sources": [
 				"src/libnodegit.cc",
-				"src/repository.cc"
+				"src/repository.cc",
+				"src/commit.cc"
 			],
 			'libraries': [
 				'-lgit2'
