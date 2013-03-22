@@ -16,3 +16,5 @@ describe "libnodegit", () ->
         lib.should.be.an.instanceOf(Object)
     it "should have property Repository", ->
         lib.should.have.property('Repository')
+    it "should have property Commit", ->
+        lib.should.have.property('Commit')
