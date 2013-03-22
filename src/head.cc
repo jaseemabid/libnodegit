@@ -4,7 +4,7 @@
 
 #include <git2.h>
 
-#include "util.cc"
+#include "util.h"
 #include "repository.h"
 
 

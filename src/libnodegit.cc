@@ -3,7 +3,6 @@
 #include "repository.h"
 #include "commit.h"
 
-
 using namespace v8;
 
 void InitAll(Handle<Object> target) {

@@ -1,7 +1,7 @@
 #include <node.h>
 #include <v8.h>
 
-#include "util.cc"
+#include "util.h"
 #include "repository.h"
 
 #include <git2.h>

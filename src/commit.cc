@@ -7,6 +7,8 @@
 #include "repository.h"
 #include "commit.h"
 
+#include "util.h"
+
 using namespace v8;
 
 void Commit::Initialize(Handle<Object> target) {
