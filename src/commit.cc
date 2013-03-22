@@ -19,8 +19,8 @@ void Commit::Initialize(Handle<Object> target) {
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("sha"),
-								  FunctionTemplate::New(sha)->GetFunction());
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("message"),
+								  FunctionTemplate::New(message)->GetFunction());
 
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Commit"), constructor);
@@ -44,15 +44,10 @@ Commit::Commit(const Arguments& args) {
 		  std::cout << "Error looking up commit" ;
 	 }
 
-	 message  = git_commit_message(commit);
-	 author   = git_commit_author(commit);
-	 cmtter   = git_commit_committer(commit);
-	 ctime    = git_commit_time(commit);
-
-	 std::cout << "Message : " << message ;
-	 std::cout << "Author  : "
-			   << author->name
-			   << " <" << author->email << "> " << "\n" ;
+	 msg_string	= git_commit_message(commit);
+	 author_sig	= git_commit_author(commit);
+	 cmtter_sig	= git_commit_committer(commit);
+	 ctime		= git_commit_time(commit);
 
 	// if(args.Length() == 0 || !args[0]->IsString()) {
 	// 	ThrowException(Exception::Error(String::New("SHA id is required and must be a String")));
@@ -95,10 +90,18 @@ Handle<Value> Commit::New(const Arguments& args) {
 }
 
 
-Handle<Value> Commit::sha(const Arguments& args) {
-  HandleScope scope;
+Handle<Value> Commit::message(const Arguments& args) {
 
-  std::cout << "Retrun SHA here ";
+	 HandleScope scope;
 
-  return scope.Close( Number::New(0) );
+	 Commit* obj = ObjectWrap::Unwrap<Commit>(args.This());
+
+	 if(obj) {
+		  return scope.Close(String::New(obj->msg_string));
+
+	 } else {
+		  return ThrowException(
+			   Exception::Error(
+					String::New("Unable to get the commit")));
+	 }
 }

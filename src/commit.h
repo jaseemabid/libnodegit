@@ -17,8 +17,8 @@ public:
 	git_commit *commit;
 	git_oid oid;
 
-	const git_signature *author, *cmtter;
-	const char *message;
+	const git_signature *author_sig, *cmtter_sig;
+	const char *msg_string;
 	time_t ctime;
 	unsigned int parents, p;
 
@@ -29,7 +29,7 @@ private:
 	~Commit();
 
 	static v8::Handle<v8::Value> New(const v8::Arguments& args);
-	static v8::Handle<v8::Value> sha(const v8::Arguments& args);
+	static v8::Handle<v8::Value> message(const v8::Arguments& args);
 };
 
 #endif
