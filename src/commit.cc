@@ -31,6 +31,12 @@ Commit::Commit(const Arguments& args) {
 	   Initialize a commit object with a SHA
 	  */
 
+	 if(args.Length() == 0 || !args[0]->IsString()) {
+		  ThrowException(
+			   Exception::Error(
+					String::New("SHA id is required and must be a String")));
+	 }
+
 	 int error;
 	 git_repository *repo;
 
@@ -48,10 +54,6 @@ Commit::Commit(const Arguments& args) {
 	 author_sig	= git_commit_author(commit);
 	 cmtter_sig	= git_commit_committer(commit);
 	 ctime		= git_commit_time(commit);
-
-	// if(args.Length() == 0 || !args[0]->IsString()) {
-	// 	ThrowException(Exception::Error(String::New("SHA id is required and must be a String")));
-	// }
 
 	// sha_ = V8StringToChar(args[0]->ToString());
 
