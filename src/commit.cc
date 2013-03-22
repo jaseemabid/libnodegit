@@ -31,27 +31,38 @@ Commit::Commit(const Arguments& args) {
 	   Initialize a commit object with a SHA
 	  */
 
+	 // Can't just return from a C++ constructor on error? WTF!
+	 // Ideally I'd just return, but looks like I need a error bit here.
+	 int error = 0;
+
 	 if(args.Length() == 0 || !args[0]->IsString()) {
 		  ThrowException(
 			   Exception::Error(
 					String::New("SHA id is required and must be a String")));
+
+		  error = 1;
 	 }
 
-	 int error;
 	 git_repository *repo;
 
-	 error = git_repository_open(&repo, "/home/jaseemabid/Projects/libnodegit");
+	 if (!error) {
+		  error = git_repository_open(
+			   &repo,
+			   "/home/jaseemabid/Projects/libnodegit");
+	 }
 
-	 /* Get the sha id in a format v8 understands
-	   Convert std::string to const char* or char*
-	   http://stackoverflow.com/a/347959/501945 */
+	 if (!error) {
+		  /* Get the sha id in a format v8 understands
+			 Convert std::string to const char* or char*
+			 http://stackoverflow.com/a/347959/501945 */
 
-	 sha_ = V8StringToChar(args[0]->ToString());
-	 const char * sha = sha_.c_str();
+		  sha_ = V8StringToChar(args[0]->ToString());
+		  const char * sha = sha_.c_str();
 
-	 git_oid_fromstr(&oid, sha);
+		  git_oid_fromstr(&oid, sha);
 
-	 error = git_commit_lookup(&commit, repo, &oid);
+		  error = git_commit_lookup(&commit, repo, &oid);
+	 }
 
 	 if (error != 0) {
 		  ThrowException(
@@ -59,12 +70,14 @@ Commit::Commit(const Arguments& args) {
 					String::New("Error looking up the commit")));
 	 }
 
+	 if(! error) {
 
-	 // Read commit values and store to class variables
-	 msg_string	= git_commit_message(commit);
-	 author_sig	= git_commit_author(commit);
-	 cmtter_sig	= git_commit_committer(commit);
-	 ctime		= git_commit_time(commit);
+		  // Read commit values and store to class variables
+		  msg_string	= git_commit_message(commit);
+		  author_sig	= git_commit_author(commit);
+		  cmtter_sig	= git_commit_committer(commit);
+		  ctime		= git_commit_time(commit);
+	 }
 
 };
 
