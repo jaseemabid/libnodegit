@@ -8,7 +8,9 @@ log        = console.log
 
 REPO_VALID = "/home/jaseemabid/Projects/libnodegit"
 
-commit = new lib.Commit("361666a55ab643ca9e68de6cc44f800627c002e3");
+repo = new lib.Repository(REPO_VALID)
+head = repo.head()
+commit = new lib.Commit(head);
 
-console.log " Commit: ", commit
-console.log " Commit.sha: ", commit.sha()
+console.log "HEAD sha     : ", head
+console.log "HEAD message : ", commit.message()
