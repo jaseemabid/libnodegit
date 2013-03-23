@@ -2,7 +2,7 @@
 
 "use strict";
 
-lib        = require('../lib/index.js')
+lib        = require('../lib/index')
 _          = require('underscore')
 log        = console.log
 def        = require('./defaults')
