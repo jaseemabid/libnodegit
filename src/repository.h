@@ -26,6 +26,7 @@ private:
 	static v8::Handle<v8::Value> isEmpty(const v8::Arguments& args);
 	static v8::Handle<v8::Value> head(const v8::Arguments& args);
 	static v8::Handle<v8::Value> free(const v8::Arguments& args);
+	static v8::Handle<v8::Value> commit(const v8::Arguments& args);
 
 };
 
