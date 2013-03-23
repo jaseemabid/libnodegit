@@ -2,7 +2,7 @@
 
 "use strict";
 
-lib        = require('../build/Release/libnodegit')
+lib        = require('../lib/index.js')
 _          = require('underscore')
 log        = console.log
 def        = require('./defaults')
