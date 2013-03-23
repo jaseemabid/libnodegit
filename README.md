@@ -1,27 +1,21 @@
 # libnodegit
 
-libnodegit is asynchronous git bindings for node.js inspired by the similar
-projects [node-gitteh](https://github.com/libgit2/node-gitteh) and
-[nodegit](https://github.com/tbranyen/nodegit). It is built using the
-[libgit2](http://libgit2.github.com/) library.
-
-More information is there on the wiki.
+Asynchronous git bindings for node.js inspired by similar projects
+[node-gitteh](https://github.com/libgit2/node-gitteh) and
+[nodegit](https://github.com/tbranyen/nodegit). Built using
+[libgit2](http://libgit2.github.com/) library and Google's v8/chrome.
 
 ## Installation
 
 Mac OS X/Linux/Unix
 Install nodegit by cloning source from GitHub.
 
-*TODO*: Add makefiles to automate this?
-
-*Note: nodegit assumes your library path exists at ~/.node_libraries you can
- change this by specifying a new lib path*
+*TODO*: Publish to npm
 
 	# Install node.js
-	# Install libgit2
+	# Install libgit2, [have a look at issue #1]
 	$ git clone https://github.com/jaseemabid/libnodegit.git libnodegit
 	$ npm install ./libnodegit
-
 
 ## Running tests
 
@@ -50,12 +44,13 @@ A long boring academic report
 
 A quick presentation [slides](http://rvl.io/jaseemabid/libnodegit)
 
-## libnodegit helloworld in CoffeeScript
+## Examples
 
+Have a look at the examples/ folder
 
 ## License and legal stuff
 
-Copy this, I don't care. Releasing code as
+Copy this, I don't care. Releasing code under
 [WTFPL](http://en.wikipedia.org/wiki/WTFPL)
 
         0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
