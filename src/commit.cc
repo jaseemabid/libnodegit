@@ -35,7 +35,7 @@ Commit::Commit(const Arguments& args) {
 	 // Ideally I'd just return, but looks like I need a error bit here.
 	 int error = 0;
 
-	 if(args.Length() == 0 || !args[0]->IsString()) {
+	 if(args.Length() < 2 || !args[0]->IsString()) {
 		  ThrowException(
 			   Exception::Error(
 					String::New("SHA id is required and must be a String")));
@@ -43,12 +43,21 @@ Commit::Commit(const Arguments& args) {
 		  error = 1;
 	 }
 
+	 if(args.Length() < 2 || !args[1]->IsString()) {
+		  ThrowException(
+			   Exception::Error(
+					String::New("Path is required and must be a String")));
+
+		  error = 1;
+	 }
+
 	 git_repository *repo;
 
 	 if (!error) {
-		  error = git_repository_open(
-			   &repo,
-			   "/home/jaseemabid/Projects/libnodegit");
+		  std::string path_ = V8StringToChar(args[1]->ToString());
+		  const char * path = path_.c_str();
+
+		  error = git_repository_open(&repo, path);
 	 }
 
 	 if (!error) {

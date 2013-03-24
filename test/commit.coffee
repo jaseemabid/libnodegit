@@ -18,15 +18,15 @@ describe "Commit", ->
 
     it "should read valid commits", ->
         (() ->
-            commit = new lib.Commit(COMMIT_VALID)
+            commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
         ).should.not.throw();
 
     it "should not read invalid commits", ->
         (() ->
-            commit = new lib.Commit(COMMIT_INVALID)
+            commit = new lib.Commit(COMMIT_INVALID, REPO_VALID)
         ).should.throw()
 
     describe "message", ->
         it "should return a string", ->
-            commit = new lib.Commit(COMMIT_VALID)
+            commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
             commit.message().should.be.a('string')

@@ -10,7 +10,7 @@ REPO_VALID = "/home/jaseemabid/Projects/libnodegit"
 
 repo = new lib.Repository(REPO_VALID)
 head = repo.head()
-commit = new lib.Commit(head);
+commit = new lib.Commit(head, REPO_VALID);
 
 console.log "HEAD sha     : ", head
 console.log "HEAD message : ", commit.message()
