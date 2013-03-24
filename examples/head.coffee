@@ -10,7 +10,7 @@ REPO_VALID = "/home/jaseemabid/Projects/libnodegit"
 
 repo = new lib.Repository(REPO_VALID)
 head = repo.head()
-commit = new lib.Commit(head, REPO_VALID);
+commit = repo.commit(head)
 
 console.log "REPO         : ", repo
 console.log "REPO path    : ", repo.path()
