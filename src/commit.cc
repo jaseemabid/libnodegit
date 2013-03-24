@@ -9,8 +9,6 @@
 
 #include "util.h"
 
-#include <vector>
-
 using namespace v8;
 
 void Commit::Initialize(Handle<Object> target) {
@@ -136,15 +134,15 @@ Handle<Value> Commit::parents(const Arguments& args) {
 
 	 parent_count = git_commit_parentcount(obj->commit);
 
+	 Handle<v8::Array> parents = v8::Array::New(2);
+
 	 for (p = 0;p < parent_count;p++) {
 		  git_commit *parent;
 		  git_commit_parent(&parent, obj->commit, p);
 		  git_oid_fmt(out, git_commit_id(parent));
-		  std::cout << "Parent: %s\n" << out;
-
+		  parents->Set(p, v8::String::New(out));
 		  git_commit_free(parent);
 	 }
 
-	 return scope.Close(v8::Number::New(1));
-
+	 return scope.Close(parents);
 }
