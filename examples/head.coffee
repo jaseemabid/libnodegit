@@ -16,3 +16,4 @@ console.log "REPO         : ", repo
 console.log "REPO path    : ", repo.path()
 console.log "HEAD sha     : ", head
 console.log "HEAD message : ", commit.message()
+console.log "HEAD parents : ", commit.parents()

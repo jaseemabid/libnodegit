@@ -26,6 +26,20 @@ describe "Commit", ->
             commit = new lib.Commit(COMMIT_INVALID, REPO_VALID)
         ).should.throw()
 
+
+    describe "parents", ->
+        it "should return an array", ->
+            commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
+            commit.parents().should.be.an.instanceOf(Array)
+        it "should have atleast one parent", ->
+            commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
+            commit.parents().should.have.length(1)
+        it "should have have valid sha ID", ->
+            commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
+            _.each commit.parents(), (parent) ->
+                parent.should.be.a('string')
+                parent.should.have.length(40)
+
     describe "message", ->
         it "should return a string", ->
             commit = new lib.Commit(COMMIT_VALID, REPO_VALID)
