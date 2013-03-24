@@ -134,7 +134,7 @@ Handle<Value> Commit::parents(const Arguments& args) {
 
 	 parent_count = git_commit_parentcount(obj->commit);
 
-	 Handle<v8::Array> parents = v8::Array::New(2);
+	 Handle<v8::Array> parents = v8::Array::New(parent_count);
 
 	 for (p = 0;p < parent_count;p++) {
 		  git_commit *parent;
