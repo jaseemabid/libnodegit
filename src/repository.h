@@ -14,7 +14,8 @@ public:
 	git_repository *repo_;
 	git_index *index_;
 
-	std::string path_;
+	std::string path__;
+	const char * path_;
 
 private:
 	Repository(const Arguments& args);

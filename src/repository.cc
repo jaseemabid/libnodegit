@@ -34,6 +34,10 @@ void Repository::Initialize(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
 								  FunctionTemplate::New(free)->GetFunction());
 
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("path"),
+								  FunctionTemplate::New(path)->GetFunction());
+
+
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Repository"), constructor);
 }
@@ -44,14 +48,14 @@ Repository::Repository(const Arguments& args) {
 		ThrowException(Exception::Error(String::New("Path is required and must be a String")));
 	}
 
-	path_ = V8StringToChar(args[0]->ToString());
+	path__ = V8StringToChar(args[0]->ToString());
 
 	// Convert std::string to const char* or char*
 	// http://stackoverflow.com/a/347959/501945
-	const char * c = path_.c_str();
+	path_ = path__.c_str();
 
 	int status;
-	status = git_repository_open(&repo_,c );
+	status = git_repository_open(&repo_, path_ );
 
 	// Throw an exception for non zero status
 	// TODO This is not working
@@ -127,6 +131,6 @@ Handle<Value> Repository::path(const Arguments& args) {
   HandleScope scope;
 
   Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
-  return scope.Close( String::New("obj->path_"));
+  return scope.Close( String::New(obj->path_));
 
 }
