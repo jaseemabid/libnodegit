@@ -34,9 +34,6 @@ void Repository::Initialize(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
 								  FunctionTemplate::New(free)->GetFunction());
 
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("commit"),
-								  FunctionTemplate::New(commit)->GetFunction());
-
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Repository"), constructor);
 }
@@ -126,10 +123,10 @@ Handle<Value> Repository::free(const Arguments& args) {
   return scope.Close( Number::New(0) );
 }
 
-Handle<Value> Repository::commit(const Arguments& args) {
+Handle<Value> Repository::path(const Arguments& args) {
   HandleScope scope;
 
   Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
+  return scope.Close( String::New("obj->path_"));
 
-  return scope.Close( Number::New(1) );
 }
