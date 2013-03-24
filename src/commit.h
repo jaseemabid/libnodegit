@@ -20,7 +20,6 @@ public:
 	const git_signature *author_sig, *cmtter_sig;
 	const char *msg_string;
 	time_t ctime;
-	unsigned int parents, p;
 
 	std::string sha_;
 
@@ -30,6 +29,8 @@ private:
 
 	static v8::Handle<v8::Value> New(const v8::Arguments& args);
 	static v8::Handle<v8::Value> message(const v8::Arguments& args);
+	static v8::Handle<v8::Value> parents(const v8::Arguments& args);
+
 };
 
 #endif
