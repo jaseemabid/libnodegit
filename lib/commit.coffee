@@ -7,4 +7,12 @@ lib.Repository.prototype.commit = (sha) ->
     # This is supposed to be implemented at C++ layer, and with js. Ideally the
     # Commit constructor should never be exposed, since its just a property of
     # the Repository instance.
-    new lib.Commit sha, @path()
+
+    # Make a new commit object
+    commit = new lib.Commit sha, @path()
+
+    # Define commit.sha to return the SHA ID
+    commit.sha = () ->
+        sha
+
+    commit
