@@ -13,7 +13,6 @@ using namespace std;
 
 Handle<Value> Repository::index(const Arguments& args) {
 	HandleScope scope;
-
 	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
 	unsigned int i, index_size;
@@ -24,7 +23,6 @@ Handle<Value> Repository::index(const Arguments& args) {
 	Handle<Array> array = Array::New(index_size);
 
 	for (i = 0; i < index_size; i++) {
-
 		git_index_entry *e = git_index_get(obj->index_, i);
 		Local<Object> file = Object::New();
 
@@ -43,6 +41,5 @@ Handle<Value> Repository::index(const Arguments& args) {
 
 		array->Set(i, file);
 	}
-
 	return scope.Close(array);
 }

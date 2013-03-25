@@ -6,7 +6,6 @@
 
 #include "repository.h"
 #include "commit.h"
-
 #include "util.h"
 
 using namespace v8;
@@ -72,7 +71,6 @@ Commit::Commit(const Arguments& args) {
 		  const char * sha = sha_.c_str();
 
 		  git_oid_fromstr(&oid, sha);
-
 		  error = git_commit_lookup(&commit, repo, &oid);
 	 }
 
@@ -83,41 +81,32 @@ Commit::Commit(const Arguments& args) {
 	 }
 
 	 if(! error) {
-
 		  // Read commit values and store to class variables
 		  msg_string	= git_commit_message(commit);
 		  author_sig	= git_commit_author(commit);
 		  cmtter_sig	= git_commit_committer(commit);
-		  ctime		= git_commit_time(commit);
+		  ctime			= git_commit_time(commit);
 	 }
-
 };
 
 Commit::~Commit() {
-
 	 // TODO Unsure if this will GC properly
 	 // Do I really need to do this?
 };
 
 Handle<Value> Commit::New(const Arguments& args) {
-
 	HandleScope scope;
 	Commit* obj = new Commit(args);
 	obj->Wrap(args.This());
 	return scope.Close(args.This());
-
 }
 
-
 Handle<Value> Commit::message(const Arguments& args) {
-
 	 HandleScope scope;
-
 	 Commit* obj = ObjectWrap::Unwrap<Commit>(args.This());
 
 	 if(obj) {
 		  return scope.Close(String::New(obj->msg_string));
-
 	 } else {
 		  return ThrowException(
 			   Exception::Error(
@@ -136,7 +125,7 @@ Handle<Value> Commit::parents(const Arguments& args) {
 
 	 Handle<v8::Array> parents = v8::Array::New(parent_count);
 
-	 for (p = 0;p < parent_count;p++) {
+	 for (p = 0; p < parent_count; p++) {
 		  git_commit *parent;
 		  git_commit_parent(&parent, obj->commit, p);
 		  git_oid_fmt(out, git_commit_id(parent));

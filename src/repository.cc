@@ -45,11 +45,12 @@ void Repository::Initialize(Handle<Object> target) {
 Repository::Repository(const Arguments& args) {
 
 	if(args.Length() == 0 || !args[0]->IsString()) {
-		ThrowException(Exception::Error(String::New("Path is required and must be a String")));
+		ThrowException(
+			 Exception::Error(
+				  String::New("Path is required and must be a String")));
 	}
 
 	path__ = V8StringToChar(args[0]->ToString());
-
 	// Convert std::string to const char* or char*
 	// http://stackoverflow.com/a/347959/501945
 	path_ = path__.c_str();
@@ -60,13 +61,14 @@ Repository::Repository(const Arguments& args) {
 	// Throw an exception for non zero status
 	// TODO This is not working
 	if (status != 0) {
-		ThrowException(Exception::Error(v8::String::New("+ Unable to open the git repository")));
+		 ThrowException(
+			  Exception::Error(
+				   v8::String::New("Unable to open the git repository")));
 	} else {
 		 // Throw is not *throwing*. I need an else clause here
 		 git_repository_index(&index_, repo_);
 		 git_index_read(index_);
 	}
-
 };
 
 Repository::~Repository() {
@@ -74,25 +76,20 @@ Repository::~Repository() {
 	// TODO Unsure if this will GC properly
 	git_index_free(index_);
 	git_repository_free(repo_);
-
 };
 
 Handle<Value> Repository::New(const Arguments& args) {
-
 	HandleScope scope;
 	Repository* obj = new Repository(args);
 	obj->Wrap(args.This());
 	return scope.Close(args.This());
-
 }
 
 Handle<Value> Repository::isEmpty(const Arguments& args) {
-
 	HandleScope scope;
 	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
-	int isEmpty;
-	isEmpty =  git_repository_is_empty(obj->repo_);
+	int isEmpty = git_repository_is_empty(obj->repo_);
 
 	if(isEmpty == 1)  {
 		return scope.Close(v8::True());
@@ -102,7 +99,6 @@ Handle<Value> Repository::isEmpty(const Arguments& args) {
 }
 
 Handle<Value> Repository::isBare(const Arguments& args) {
-
 	HandleScope scope;
 	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
@@ -118,19 +114,17 @@ Handle<Value> Repository::isBare(const Arguments& args) {
 
 
 Handle<Value> Repository::free(const Arguments& args) {
-  HandleScope scope;
+	 HandleScope scope;
+	 Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
 
-  Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
+	 git_repository_free(obj->repo_);
 
-  git_repository_free(obj->repo_);
-
-  return scope.Close( Number::New(0) );
+	 return scope.Close(Number::New(0) );
 }
 
 Handle<Value> Repository::path(const Arguments& args) {
-  HandleScope scope;
+	 HandleScope scope;
+	 Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
 
-  Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());;
-  return scope.Close( String::New(obj->path_));
-
+	 return scope.Close(String::New(obj->path_));
 }
