@@ -2,58 +2,51 @@
 
 "use strict";
 
-lib        = require('../lib/index')
-_          = require('underscore')
-log        = console.log
-def        = require('./defaults')
+lib          = require('../lib/index')
+_            = require('underscore')
+log          = console.log
+defaults     = require('./defaults')
 
-REPO_VALID = def.REPO_VALID
-REPO_BARE  = def.REPO_BARE
-REPO_EMPTY = def.REPO_EMPTY
+repo_bare    = new lib.Repository defaults.repo_bare_path
+repo_empty   = new lib.Repository defaults.repo_empty_path
+repo_valid   = new lib.Repository defaults.repo_valid_path
 
 describe "Repository", ->
 
     it "should open valid repositories", ->
         (() ->
-            repo = new lib.Repository(REPO_VALID)
+            repo_valid = new lib.Repository(defaults.repo_valid_path)
         ).should.not.throw();
 
     it "should not open invalid repositories", ->
         (() ->
-            repo = new lib.Repository("/a/b/c")
+            repo_invalid = new lib.Repository defaults.repo_invalid_path
         ).should.throw()
 
     describe "isBare", ->
         it "should return a boolean", ->
-            repo = new lib.Repository(REPO_VALID)
-            repo.isBare().should.be.a('boolean')
+           _.each [repo_valid, repo_bare, repo_empty], (repo) ->
+              repo.isBare().should.be.a('boolean')
 
         it "should return true for bare repo", ->
-            repo = new lib.Repository(REPO_BARE)
-            repo.isBare().should.be.true
+            repo_bare.isBare().should.be.true
 
         it "should return false for non bare", ->
-            repo = new lib.Repository(REPO_VALID)
-            repo.isBare().should.not.be.true
-
+            repo_valid.isBare().should.not.be.true
 
     describe "isEmpty", ->
         it "should return a boolean", ->
-            repo = new lib.Repository(REPO_VALID)
-            repo.isEmpty().should.be.a('boolean')
+           _.each [repo_valid, repo_bare, repo_empty], (repo) ->
+              repo.isEmpty().should.be.a('boolean')
 
         it "should return true for empty repo", ->
-            repo = new lib.Repository(REPO_EMPTY)
-            repo.isEmpty().should.be.true
+            repo_empty.isEmpty().should.be.true
 
         it "should return false for non empty", ->
-            repo = new lib.Repository(REPO_VALID)
-            repo.isEmpty().should.not.be.true
-
+            repo_valid.isEmpty().should.not.be.true
 
     describe "index", () ->
-        repo = new lib.Repository(REPO_VALID)
-        index = repo.index()
+        index = repo_valid.index()
 
         it "should return an array", () ->
             index.should.be.an.instanceOf(Array)
@@ -75,8 +68,7 @@ describe "Repository", ->
             file.should.have.property('mtime')
 
     describe "head", () ->
-        repo = new lib.Repository(REPO_VALID)
-        head = repo.head()
+        head = repo_valid.head()
 
         it "should return a object", () ->
             head.should.be.a('object')

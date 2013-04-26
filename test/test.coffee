@@ -4,12 +4,6 @@
 
 lib        = require('../lib/index')
 _          = require('underscore')
-log        = console.log
-def        = require('./defaults')
-
-REPO_VALID = def.REPO_VALID
-REPO_BARE  = def.REPO_BARE
-REPO_EMPTY = def.REPO_EMPTY
 
 describe "libnodegit", () ->
     it "should return an object", ->
