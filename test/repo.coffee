@@ -73,3 +73,11 @@ describe "Repository", ->
             file.should.have.property('gid')
             file.should.have.property('ctime')
             file.should.have.property('mtime')
+
+    describe "head", () ->
+        repo = new lib.Repository(REPO_VALID)
+        head = repo.head()
+
+        it "should return a sha", () ->
+            head.should.be.a('string')
+            head.should.have.length(40)

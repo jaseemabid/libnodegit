@@ -28,8 +28,8 @@ void Repository::Initialize(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("isBare"),
 								  FunctionTemplate::New(isBare)->GetFunction());
 
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("head"),
-								  FunctionTemplate::New(head)->GetFunction());
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("head_"),
+								  FunctionTemplate::New(head_)->GetFunction());
 
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("free"),
 								  FunctionTemplate::New(free)->GetFunction());

@@ -8,7 +8,7 @@
 #include "repository.h"
 
 
-Handle<Value> Repository::head(const Arguments& args) {
+Handle<Value> Repository::head_(const Arguments& args) {
 	 HandleScope scope;
 	 Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 

@@ -3,9 +3,10 @@ commit = require('./commit.coffee')
 _      = require('underscore')
 
 # Adding JavaScript properties to libnodegit
-# Leave here as an example
-lib.Repository.prototype.foo = () ->
-	console.log "foo in js"
+
+lib.Repository.prototype.head = () ->
+  console.log "head "
+  this.head_()
 
 # Updating libnodegit with JavaScript properties
 module.exports = lib;
