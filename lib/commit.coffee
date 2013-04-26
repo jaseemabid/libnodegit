@@ -1,18 +1,17 @@
 lib    = require('../build/Release/libnodegit')
 _      = require('underscore')
 
-lib.Repository.prototype.commit = (sha) ->
-    # OH! my OOP gods, please forgive me for this shit
-    #
-    # This is supposed to be implemented at C++ layer, and with js. Ideally the
-    # Commit constructor should never be exposed, since its just a property of
-    # the Repository instance.
 
-    # Make a new commit object
-    commit = new lib.Commit sha, @path()
+# This file, adds to repository prototype
+prototype = lib.Commit.prototype
 
-    # Define commit.sha to return the SHA ID
-    commit.sha = () ->
-        sha
+prototype.parents = () ->
 
-    commit
+    # The function gets the head SHA as a string and returns a reference object
+    # sha = this.head_()
+    # this.commit sha
+
+    plist = _.map @parents_(), (parent) =>
+        @repo().commit parent
+
+    plist
