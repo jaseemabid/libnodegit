@@ -29,7 +29,7 @@ private:
 
 	static v8::Handle<v8::Value> New(const v8::Arguments& args);
 	static v8::Handle<v8::Value> message(const v8::Arguments& args);
-	static v8::Handle<v8::Value> parents(const v8::Arguments& args);
+	static v8::Handle<v8::Value> parents_(const v8::Arguments& args);
 
 };
 

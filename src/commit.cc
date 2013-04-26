@@ -21,8 +21,8 @@ void Commit::Initialize(Handle<Object> target) {
 	tpl->PrototypeTemplate()->Set(String::NewSymbol("message"),
 								  FunctionTemplate::New(message)->GetFunction());
 
-	tpl->PrototypeTemplate()->Set(String::NewSymbol("parents"),
-								  FunctionTemplate::New(parents)->GetFunction());
+	tpl->PrototypeTemplate()->Set(String::NewSymbol("parents_"),
+								  FunctionTemplate::New(parents_)->GetFunction());
 
 	Persistent<Function> constructor = Persistent<Function>::New(tpl->GetFunction());
 	target->Set(String::NewSymbol("Commit"), constructor);
@@ -114,7 +114,7 @@ Handle<Value> Commit::message(const Arguments& args) {
 	 }
 }
 
-Handle<Value> Commit::parents(const Arguments& args) {
+Handle<Value> Commit::parents_(const Arguments& args) {
 	 HandleScope scope;
 	 Commit* obj = ObjectWrap::Unwrap<Commit>(args.This());
 
