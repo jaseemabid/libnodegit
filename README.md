@@ -39,8 +39,10 @@ Quite incomplete. Preview [here](https://github.com/jaseemabid/libnodegit/wiki/M
 
 ## Resources
 
-A long boring academic report
-[pdf](https://github.com/downloads/jaseemabid/libnodegit/report.pdf)
+A long boring academic
+ [report](https://github.com/jaseemabid/Major-project-report) made strictly for
+ academic purposes, which might not serve as a project introduction for a hacker
+ wanting to use the library. See the test suite for the API.
 
 A quick presentation [slides](http://rvl.io/jaseemabid/libnodegit)
 
@@ -50,15 +52,5 @@ Have a look at the examples/ folder
 
 ## License and legal stuff
 
-Copy this, I don't care. Releasing code under
-[WTFPL](http://en.wikipedia.org/wiki/WTFPL)
-
-        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-        0 0 0 0 0 0 0 a 0 0 0 0 0 0 0
-        0 0 0 0 0 0 a C a 0 0 0 0 0 0
-        0 0 0 0 0 a a a a a 0 0 0 0 0
-        0 0 0 0 a a a a a a a 0 0 0 0
-        0 0 0 a a a a a a a a a 0 0 0
-     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-     0 0 0 0 0 0 0 K O P I M I 0 0 0 0 0 0
-    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+MIT it is. You can use the library anyway you want but I'll be happy to get back
+any code changes you make. Linking back appreciated.
