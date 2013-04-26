@@ -70,16 +70,5 @@ describe "Repository", ->
     describe "head", () ->
         head = repo_valid.head()
 
-        it "should return a object", () ->
-            head.should.be.a('object')
-
-        it "should have a sha", () ->
-            head.sha().should.be.a('string').with.length(40)
-
-        it "should have a message", () ->
-            head.message().should.be.a('string')
-
-        it "should have parents", () ->
-            _.each head.parents(), (parent) ->
-                parent.should.be.a('string')
-                parent.should.have.length(40)
+        it "should return a commit instance", () ->
+            head.should.be.an.instanceOf lib.Commit
