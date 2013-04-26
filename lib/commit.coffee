@@ -1,7 +1,6 @@
 lib    = require('../build/Release/libnodegit')
 _      = require('underscore')
 
-
 # This file, adds to repository prototype
 prototype = lib.Commit.prototype
 
