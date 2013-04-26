@@ -15,7 +15,7 @@ repo_valid     = new lib.Repository defaults.repo_valid_path
 
 commit_valid   = repo_valid.commit COMMIT_VALID
 
-describe "Commit constructor", ->
+describe "Commit", ->
 
     it "should read valid commits", ->
         (() ->
@@ -36,10 +36,10 @@ describe "Commit constructor", ->
 
     describe "parents", ->
         it "should return an array", ->
-            commit_valid.parents().should.be.an.instanceOf(Array)
+            commit_valid.parents().should.be.an.instanceOf Array
 
-        it "should have atleast one parent", ->
-            commit_valid.parents().should.have.length(1)
+        it "should have at least one parent", ->
+            commit_valid.parents().should.have.length 1
 
         it "should return commit instances", () ->
             _.each commit_valid.parents(), (parent) ->
@@ -47,4 +47,4 @@ describe "Commit constructor", ->
 
     describe "message", ->
         it "should return a string", ->
-            commit_valid.message().should.be.a('string')
+            commit_valid.message().should.be.a 'string'

@@ -54,18 +54,29 @@ describe "Repository", ->
         it "should have at least 1 file in it", () ->
             index.length.should.be.above(0)
 
-        it "should have path, sha, size, device, inode, uid, gid, ctime, mtime in it", () ->
+        it "should have property path", () ->
+            _.all index, (file) ->
+                file.should.have.property('path')
+                file.path.should.be.a 'string'
 
-        _.all index, (file) ->
-            file.should.have.property('path')
-            file.should.have.property('sha')
-            file.should.have.property('size')
-            file.should.have.property('device')
-            file.should.have.property('inode')
-            file.should.have.property('uid')
-            file.should.have.property('gid')
-            file.should.have.property('ctime')
-            file.should.have.property('mtime')
+        it "should have property sha", () ->
+            _.all index, (file) ->
+                file.should.have.property('sha')
+                file.sha.should.be.a 'string'
+                file.sha.should.have.length 40
+
+        it "should have property size", () ->
+            _.all index, (file) ->
+                file.should.have.property('size')
+
+        it "should have properties device, inode, uid, gid, ctime and mtime", () ->
+            _.all index, (file) ->
+                file.should.have.property('device')
+                file.should.have.property('inode')
+                file.should.have.property('uid')
+                file.should.have.property('gid')
+                file.should.have.property('ctime')
+                file.should.have.property('mtime')
 
     describe "head", () ->
         head = repo_valid.head()
