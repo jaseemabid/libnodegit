@@ -10,15 +10,14 @@ REPO_VALID = "/home/jaseemabid/Projects/libnodegit"
 
 repo = new lib.Repository(REPO_VALID)
 head = repo.head()
-commit = repo.commit(head)
 
 console.log "$ git log --oneline -10  \n"
 
 _(10).times (i) ->
 
     # Read data
-    message = commit.message()
-    sha = commit.sha()
+    message = head.message()
+    sha = head.sha()
 
     # Format for printing
     message = message.substring 0, _.min([message.indexOf('\n'), 80])
@@ -26,4 +25,4 @@ _(10).times (i) ->
 
     console.log "#{sha} #{message}"
 
-    commit = repo.commit commit.parents()[0]
+    head = head.parents()[0]
