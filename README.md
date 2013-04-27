@@ -50,6 +50,10 @@ A quick presentation [slides](http://rvl.io/jaseemabid/libnodegit)
 
 Have a look at the examples/ folder
 
+# Libgit2 version
+
+Tested on a50086d174658914d4d6462afbc83b02825b1f5b
+
 ## License and legal stuff
 
 MIT it is. You can use the library anyway you want but I'll be happy to get back

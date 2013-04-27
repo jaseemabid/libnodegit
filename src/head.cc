@@ -17,7 +17,7 @@ Handle<Value> Repository::head_(const Arguments& args) {
 	 int status = git_repository_head(&head_out, obj->repo_);
 
 	 if (status == 0) {
-		  const git_oid * head_oid = git_reference_oid(head_out);
+		  const git_oid * head_oid = git_reference_target(head_out);
 		  char sha[41]; sha[40] = '\0';
 
 		  git_oid_fmt(sha, head_oid);

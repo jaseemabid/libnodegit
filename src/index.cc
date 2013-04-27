@@ -16,18 +16,17 @@ Handle<Value> Repository::index(const Arguments& args) {
 	Repository* obj = ObjectWrap::Unwrap<Repository>(args.This());
 
 	unsigned int i, index_size;
-	git_oid oid;
 	char out[41]; out[40] = '\0';
 
 	index_size = git_index_entrycount(obj->index_);
 	Handle<Array> array = Array::New(index_size);
 
 	for (i = 0; i < index_size; i++) {
-		git_index_entry *e = git_index_get(obj->index_, i);
+
 		Local<Object> file = Object::New();
 
-		oid = e->oid;
-		git_oid_fmt(out, &oid);
+		const git_index_entry *e = git_index_get_byindex(obj->index_, i);
+		git_oid_fmt(out, &e->oid);
 
 		file->Set(String::NewSymbol("path"), String::New(e->path));
 		file->Set(String::NewSymbol("sha"), String::New(out));
