@@ -1,6 +1,6 @@
 {
 	"name": "libnodegit",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "JavaScript wrapper for git with libgit2",
 	"main": "lib/index",
 	"directories": {
@@ -8,13 +8,12 @@
 		"example": "examples"
 	},
 	"dependencies": {
+		"chai": "~1.3.0",
 		"jslint": "~1.6.2",
-		"jslint": "~0.1.9",
-		"should": "~1.2.0",
-		"chai": "~1.3.0"
+		"mocha": "~1.6.0",
+		"should": "~1.2.0"
 	},
 	"devDependencies": {
-		"mocha": "~1.6.0"
 	},
 	"scripts": {
 		"test": "mocha",
@@ -31,6 +30,6 @@
 		"bindings"
 	],
 	"author": "Jaseem Abid <jaseemabid@gmail.com>",
-	"license": "GPL",
+	"license": "MIT",
 	"gypfile": true
 }
