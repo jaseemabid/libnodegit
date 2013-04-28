@@ -23,3 +23,13 @@ prototype.head = () ->
     # The function gets the head SHA as a string and returns a reference object
     sha = this.head_()
     this.commit sha
+
+
+prototype.log = (opts = {count:10}) ->
+    # Return an array of commit instances
+    head = @head()
+    commits = []
+
+    _(opts.count).times () =>
+        commits.push head
+        head = head.parents()[0]
