@@ -83,3 +83,13 @@ describe "Repository", ->
 
         it "should return a commit instance", () ->
             head.should.be.an.instanceOf lib.Commit
+
+    describe "log", () ->
+        repo_log = repo_valid.log()
+
+        it "should return an array", () ->
+            repo_log.should.be.an.instanceOf(Array)
+
+        it "should return commit instances", () ->
+            _.each repo_log, (commit) ->
+                commit.should.be.an.instanceOf lib.Commit
