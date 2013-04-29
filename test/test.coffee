@@ -5,10 +5,6 @@
 lib        = require('../lib/index')
 _          = require('underscore')
 
-describe "libnodegit", () ->
-    it "should return an object", ->
-        lib.should.be.an.instanceOf(Object)
-    it "should have property Repository", ->
-        lib.should.have.property('Repository')
-    it "should have property Commit", ->
-        lib.should.have.property('Commit')
+require('./lib.coffee')
+require('./repo.coffee')
+require('./commit.coffee')
