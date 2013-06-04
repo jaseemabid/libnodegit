@@ -10,10 +10,22 @@
 				"src/repository.cc",
 				"src/commit.cc"
 			],
-			'libraries': [
-				'-lgit2'
-			]
+			'include_dirs': [
+				'vendor/libgit2/include'
+			],
 
+			'libraries': [
+				'-L<!(pwd)/vendor/libgit2/build',
+				'-lgit2'
+			],
+
+			'cflags': [
+				'-Wall'
+			],
+
+			'ldflags': [
+				'-Wl,-rpath,\$$ORIGIN/../../vendor/libgit2/build'
+			]
 		}
 	]
 }
